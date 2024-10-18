@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from randomtime import random_time
+from utils.randomtime import random_time
 from datetime import datetime
 
 class Login:
