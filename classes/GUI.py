@@ -16,14 +16,14 @@ class GUI:
         username_label.pack(pady=3)
         # username entry
         self.username_entry = tk.Entry(self.window, width=40)
-        self.username_entry.insert(0)
+        self.username_entry.insert(0, "")
         self.username_entry.pack(pady=5)
         # password label
         password_label = tk.Label(self.window, text="Password")
-        password_label.pack(pady=50)
+        password_label.pack(pady=5)
         # password entry
         self.password_entry = tk.Entry(self.window, width=40)
-        self.password_entry.insert(0, "Password")
+        self.password_entry.insert(0, "")
         self.password_entry.pack(pady=5)
         # login button
         self.login_button = tk.Button(self.window, text="Login", command=self.login)
