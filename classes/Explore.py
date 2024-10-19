@@ -8,9 +8,12 @@ class Explore:
         self.driver = driver
 
     def go_explore(self, url:str, click_times:int):
+        """Explore given area for a given number of clicks"""
         try:
             if self.driver: 
                 self.driver.get(url)
+                random_time(0.1, 0.2)
+                self.driver.refresh()
                 random_time(1, 3)
                 explore_button = self.driver.find_element(By.CSS_SELECTOR, "div#exploreconsole.explorebtn.disable-select")
                 count = 0
