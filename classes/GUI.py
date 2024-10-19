@@ -71,7 +71,7 @@ class GUI:
         explore_button.pack(pady=5)
 
         # Close button
-        close_button = tk.Button(self.window, text="Close", command=self.close_game)
+        close_button = tk.Button(game_window, text="Close", command=self.close_game)
         close_button.pack(pady=5)
 
     def start_explore(self):
