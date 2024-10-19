@@ -3,6 +3,8 @@ from tkinter import ttk
 import threading
 from classes.Game import Game
 from urls.generals import *
+from datetime import datetime
+import sys
 
 class GUI:
     def __init__(self, game:Game):
@@ -47,6 +49,9 @@ class GUI:
         game_window = tk.Toplevel(self.window)
         game_window.title("FarmRPG Automate")
 
+        # Catch close event for the game window as well
+        game_window.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         # label for explore
         explore_label = tk.Label(game_window, text="Choose a location to explore")
         explore_label.pack(pady=3)
@@ -71,7 +76,7 @@ class GUI:
         explore_button.pack(pady=5)
 
         # Close button
-        close_button = tk.Button(game_window, text="Close", command=self.close_game)
+        close_button = tk.Button(game_window, text="Close", command=self.on_closing)
         close_button.pack(pady=5)
 
     def start_explore(self):
@@ -80,8 +85,18 @@ class GUI:
         click_times = int(self.click_time_input.get())
         threading.Thread(target=self.game.explore, args=(location_url, click_times)).start()
 
-    def close_game(self):
-        threading.Thread(target=self.game.quit).start()
+    def on_closing(self):
+        try:
+            threading.Thread(target=self.game.quit).start()
+        except Exception as e:
+            print(f"[{datetime.now()}]: Exception occurred while closing: {e}")
+        finally:
+            self.window.quit()
+            self.window.destroy()
+            print(f"[{datetime.now()}]: Exiting...")
+            sys.exit()
+
+
 
     def run(self):
         self.window.mainloop()
