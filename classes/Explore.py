@@ -19,7 +19,7 @@ class Explore:
                 count = 0
                 while count < click_times:
                     explore_button.click()
-                    random_time(0.01, 0.02)
+                    random_time(0.03, 0.08)
                     count += 1
                     print(f"[{datetime.now()}]: Button is clicked {count} time(s)")
             else:
