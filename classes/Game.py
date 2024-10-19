@@ -1,7 +1,6 @@
 from selenium import webdriver
 from classes.Login import Login
 from classes.Explore import Explore
-from urls.credentials import *
 from urls.generals import *
 from datetime import datetime
 

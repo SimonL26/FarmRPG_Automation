@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from urls.generals import *
-from urls.credentials import *
 from classes.Game import Game
 from classes.GUI import GUI
 
