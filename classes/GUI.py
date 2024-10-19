@@ -11,10 +11,16 @@ class GUI:
         self.window.title("FarmRPG Automate")
 
         #Defining GUI elements for Login
+        #username label 
+        username_label = tk.Label(self.window, text="Username")
+        username_label.pack(pady=3)
         # username entry
         self.username_entry = tk.Entry(self.window, width=40)
-        self.username_entry.insert(0, "Username")
+        self.username_entry.insert(0)
         self.username_entry.pack(pady=5)
+        # password label
+        password_label = tk.Label(self.window, text="Password")
+        password_label.pack(pady=50)
         # password entry
         self.password_entry = tk.Entry(self.window, width=40)
         self.password_entry.insert(0, "Password")
