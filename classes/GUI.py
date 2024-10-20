@@ -46,44 +46,70 @@ class GUI:
         self.open_game_window()
 
     def open_game_window(self):
-        game_window = tk.Toplevel(self.window)
-        game_window.title("FarmRPG Automate")
+        self.game_window = tk.Toplevel(self.window)
+        self.game_window.title("FarmRPG Automate")
+
+        #Explore function choice
+        change_to_explore_button = tk.Button(self.game_window, text="Go Explore", command=self.process_go_explore)
+        change_to_explore_button.grid(row=0, column=0, padx=10, pady=5)
+
+        #Fishing function choice
+
+        #Close button
+        close_button = tk.Button(self.game_window, text="Close", command=self.on_closing)
+        close_button.grid(row=1, column=0, padx=10, pady=5)
+
+    def process_go_explore(self):
+        self.game_window.withdraw()
+        self.open_explore_window()
+
+    def open_explore_window(self):
+        self.explore_window = tk.Toplevel(self.game_window)
+        self.explore_window.title("FarmRPG Automate")
 
         # Catch close event for the game window as well
-        game_window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.explore_window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         # label for explore
-        explore_label = tk.Label(game_window, text="Choose a location to explore")
+        explore_label = tk.Label(self.explore_window, text="Choose a location to explore")
         explore_label.pack(pady=3)
 
         # dropdown for choosing a location
         locations = list(EXPLORE_AREAS.keys())
-        self.explore_location = ttk.Combobox(game_window, values=locations)
+        self.explore_location = ttk.Combobox(self.explore_window, values=locations)
         self.explore_location.current(0)
         self.explore_location.pack(pady=5)   
 
         # Number of times that needs to be clicked
-        click_time_label = tk.Label(game_window, text="How many times to click")
+        click_time_label = tk.Label(self.explore_window, text="How many times to click")
         click_time_label.pack(pady=3)
 
         # Input for click time
-        self.click_time_input = tk.Entry(game_window, width=40)
+        self.click_time_input = tk.Entry(self.explore_window, width=40)
         self.click_time_input.insert(0, "1")
         self.click_time_input.pack(pady=5)
 
         #Explore button
-        explore_button = tk.Button(game_window, text="Explore", command=self.start_explore)
+        explore_button = tk.Button(self.explore_window, text="Explore", command=self.start_explore)
         explore_button.pack(pady=5)
 
+        # Back button
+        back_button = tk.Button(self.explore_window, text="Back", command=self.go_back)
+        back_button.pack(side=tk.RIGHT, pady=5, padx=2)
+
         # Close button
-        close_button = tk.Button(game_window, text="Close", command=self.on_closing)
-        close_button.pack(pady=5)
+        close_button = tk.Button(self.explore_window, text="Close", command=self.on_closing)
+        close_button.pack(side=tk.LEFT, pady=5, padx=2)
 
     def start_explore(self):
         selected_location = EXPLORE_AREAS[self.explore_location.get()]
         location_url = EXPLORE_URL + selected_location
         click_times = int(self.click_time_input.get())
         threading.Thread(target=self.game.explore, args=(location_url, click_times)).start()
+
+    def go_back(self):
+        self.explore_window.withdraw()
+        self.game_window.deiconify()
 
     def on_closing(self):
         try:
@@ -95,8 +121,6 @@ class GUI:
             self.window.destroy()
             print(f"[{datetime.now()}]: Exiting...")
             sys.exit()
-
-
 
     def run(self):
         self.window.mainloop()
