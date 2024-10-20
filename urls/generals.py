@@ -1,5 +1,6 @@
 LOGIN_URL = "https://farmrpg.com/#!/login.php"
 EXPLORE_URL = "https://farmrpg.com/index.php#!/area.php?id="
+FISHING_URL = "https://farmrpg.com/#!/fishing.php?id="
 
 EXPLORE_AREAS = {
     "Forest": "7",
@@ -13,3 +14,12 @@ EXPLORE_AREAS = {
     "Hounted House": "14"
 }
 
+FISHING_AREAS = {
+    "Farm Pond": "2",
+    "Small Pond": "1",
+    "Forest Pond": "3",
+    "Lake Tempest": "4",
+    "Small Island": "5",
+    "Crystal River": "6",
+    "Emerald Beach": "7"
+}
