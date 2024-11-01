@@ -54,6 +54,8 @@ class GUI:
         change_to_explore_button.grid(row=0, column=0, padx=10, pady=5)
 
         #Fishing function choice
+        change_to_fishing_button = tk.Button(self.game_window, text="Go Fishing", command=self.process_go_fishing)
+        change_to_fishing_button.grid(row=0, column=1, padx=10, pady=5)
 
         #Close button
         close_button = tk.Button(self.game_window, text="Close", command=self.on_closing)
@@ -106,6 +108,45 @@ class GUI:
         location_url = EXPLORE_URL + selected_location
         click_times = int(self.click_time_input.get())
         threading.Thread(target=self.game.explore, args=(location_url, click_times)).start()
+
+    def process_go_fishing(self):
+        self.game_window.withdraw()
+        self.open_fishing_window()
+
+    def open_fishing_window(self):
+        self.fishing_window = tk.Toplevel(self.game_window)
+        self.fishing_window.title("FarmRPG Automate")
+
+        #Catching on close event
+        self.fishing_window.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+        #Fish location label
+        fishing_label = tk.Label(self.fishing_window, text="Choose a location to fish")
+        fishing_label.pack(pady=3)
+
+        #Fish location select
+        locations = list(FISHING_AREAS.keys())
+        self.fish_location = ttk.Combobox(self.fishing_window, values=locations)
+        self.fish_location.current(0)
+        self.fish_location.pack(pady=5)   
+
+        #Explore button
+        fishing_button = tk.Button(self.fishing_window, text="Fish", command=self.start_fish)
+        fishing_button.pack(pady=5)
+
+        # Back button
+        back_button = tk.Button(self.fishing_window, text="Back", command=self.go_back)
+        back_button.pack(side=tk.RIGHT, pady=5, padx=2)
+
+        # Close button
+        close_button = tk.Button(self.fishing_window, text="Close", command=self.on_closing)
+        close_button.pack(side=tk.LEFT, pady=5, padx=2)
+
+    def start_fish(self):
+        selected_location = FISHING_AREAS[self.fish_location.get()]
+        location_url = FISHING_URL + selected_location
+        #click_times = int(self.click_time_input.get())
+        threading.Thread(target=self.game.start_fishing, args=(location_url)).start()
 
     def go_back(self):
         self.explore_window.withdraw()
